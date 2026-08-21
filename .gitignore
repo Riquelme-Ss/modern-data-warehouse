@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Dados
+*.csv
+*.xlsx
+*.parquet
+*.json
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# dbt
+target/
+dbt_packages/
+logs/
+
+# Spark
+spark-warehouse/
+
+# Airflow
+airflow/logs/
+airflow/airflow.db
+
+# Docker
+docker-data/
