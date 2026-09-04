@@ -11,8 +11,8 @@ services:
       - :9001
 
     environment:
-      MINIO_ROOT_USER: admin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
 
     ports:
       - "9000:9000"
@@ -27,9 +27,9 @@ services:
     hostname: postgres
 
     environment:
-      POSTGRES_DB: warehouse
-      POSTGRES_USER: warehouse
-      POSTGRES_PASSWORD: warehouse
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     ports:
       - "5432:5432"
@@ -60,8 +60,8 @@ services:
         cat > /opt/spark/conf/spark-defaults.conf <<'EOF'
         spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
         spark.hadoop.fs.s3a.endpoint=http://minio:9000
-        spark.hadoop.fs.s3a.access.key=admin
-        spark.hadoop.fs.s3a.secret.key=minioadmin
+        spark.hadoop.fs.s3a.access.key=${MINIO_ROOT_USER}
+        spark.hadoop.fs.s3a.secret.key=${MINIO_ROOT_PASSWORD}
         spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider
         spark.hadoop.fs.s3a.path.style.access=true
         spark.hadoop.fs.s3a.connection.ssl.enabled=false
@@ -76,8 +76,8 @@ services:
         tail -f /dev/null
 
     environment:
-      AWS_ACCESS_KEY_ID: admin
-      AWS_SECRET_ACCESS_KEY: minioadmin
+      AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
+      AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
       AWS_REGION: us-east-1
       AWS_DEFAULT_REGION: us-east-1
 
@@ -99,6 +99,11 @@ services:
     hostname: dbt
 
     working_dir: /usr/app/dbt
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     depends_on:
       - postgres
