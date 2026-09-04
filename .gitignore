@@ -1,26 +1,39 @@
+@"
 # Python
 __pycache__/
 *.py[cod]
 .venv/
 venv/
+
+# Environment
 .env
+.env.*
+!.env.example
 
-# Jupyter
-.ipynb_checkpoints/
+# dbt
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
 
-# Dados
+# Spark
+spark/.ivy2/
+spark/logs/
+
+# Docker
+*.log
+
+# Data Lake / local data
+data/
+datasets/
 *.csv
-*.xlsx
 *.parquet
 *.json
 
-# Databases
-*.db
-*.sqlite
-*.sqlite3
+# PostgreSQL
+postgres_data/
 
-# Logs
-*.log
+# MinIO
+minio_data/
 
 # IDE
 .vscode/
@@ -29,18 +42,4 @@ venv/
 # OS
 .DS_Store
 Thumbs.db
-
-# dbt
-target/
-dbt_packages/
-logs/
-
-# Spark
-spark-warehouse/
-
-# Airflow
-airflow/logs/
-airflow/airflow.db
-
-# Docker
-docker-data/
+"@ | Set-Content .gitignore

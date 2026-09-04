@@ -1,0 +1,120 @@
+﻿version: 2
+
+sources:
+  - name: warehouse
+    description: "Camada dimensional do Data Warehouse."
+    schema: dw
+
+    tables:
+      - name: fact_sales
+        description: "Fato de vendas, com granularidade de um item de pedido."
+        columns:
+          - name: sales_key
+            tests:
+              - not_null
+              - unique
+
+          - name: order_item_id
+            tests:
+              - not_null
+              - unique
+
+          - name: customer_key
+            tests:
+              - not_null
+              - relationships:
+                  to: source('warehouse', 'dim_customer')
+                  field: customer_key
+
+          - name: product_key
+            tests:
+              - not_null
+              - relationships:
+                  to: source('warehouse', 'dim_product')
+                  field: product_key
+
+          - name: seller_key
+            tests:
+              - not_null
+              - relationships:
+                  to: source('warehouse', 'dim_seller')
+                  field: seller_key
+
+          - name: store_key
+            tests:
+              - not_null
+              - relationships:
+                  to: source('warehouse', 'dim_store')
+                  field: store_key
+
+          - name: date_key
+            tests:
+              - not_null
+              - relationships:
+                  to: source('warehouse', 'dim_date')
+                  field: date_key
+
+      - name: dim_customer
+        description: "Dimensão de clientes."
+        columns:
+          - name: customer_key
+            tests:
+              - not_null
+              - unique
+
+          - name: customer_id
+            tests:
+              - not_null
+              - unique
+
+      - name: dim_product
+        description: "Dimensão de produtos."
+        columns:
+          - name: product_key
+            tests:
+              - not_null
+              - unique
+
+          - name: product_id
+            tests:
+              - not_null
+              - unique
+
+      - name: dim_seller
+        description: "Dimensão de vendedores."
+        columns:
+          - name: seller_key
+            tests:
+              - not_null
+              - unique
+
+          - name: seller_id
+            tests:
+              - not_null
+              - unique
+
+      - name: dim_store
+        description: "Dimensão de lojas."
+        columns:
+          - name: store_key
+            tests:
+              - not_null
+              - unique
+
+          - name: store_id
+            tests:
+              - not_null
+              - unique
+
+      - name: dim_date
+        description: "Dimensão calendário."
+        columns:
+          - name: date_key
+            tests:
+              - not_null
+              - unique
+
+          - name: full_date
+            tests:
+              - not_null
+              - unique

@@ -1,0 +1,20 @@
+select
+    sales_key,
+    order_item_id,
+    order_id,
+    customer_key,
+    product_key,
+    seller_key,
+    store_key,
+    date_key,
+    quantity,
+    unit_price,
+    discount,
+    gross_amount,
+    discount_amount,
+    net_amount,
+    order_date,
+    order_status,
+    payment_method,
+    created_at
+from {{ source('warehouse', 'fact_sales') }}
